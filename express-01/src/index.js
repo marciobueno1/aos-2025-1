@@ -1,4 +1,16 @@
 import "dotenv/config";
+import cors from "cors";
+import express from "express";
 
-console.log("Hello Node.JS!");
-console.log("DB_USERNAME=", process.env.DB_USERNAME);
+const app = express();
+
+// middlewares
+app.use(cors());
+
+// handlers
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
+const port = process.env.PORT ?? 3000;
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
