@@ -2,10 +2,9 @@
   "name": "express-01",
   "version": "1.0.0",
   "description": "Primeiro exemplo de um back-end com Express",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/index.js",
-    "start": "node src/index.js"
+    "start": "nodemon --exec babel-node api/index.js"
   },
   "keywords": [
     "express",
@@ -16,16 +15,14 @@
   "author": "Marcio Bueno",
   "license": "MIT",
   "type": "commonjs",
-  "devDependencies": {
+  "dependencies": {
     "@babel/core": "^7.26.10",
     "@babel/node": "^7.26.0",
     "@babel/preset-env": "^7.26.9",
-    "nodemon": "^3.1.9"
-  },
-  "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "nodemon": "^3.1.9",
     "uuid": "^11.1.0"
   }
 }
