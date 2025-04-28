@@ -4,7 +4,8 @@
   "description": "Primeiro exemplo de um back-end com Express",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/index.js"
+    "dev": "nodemon --exec babel-node src/index.js",
+    "start": "node src/index.js"
   },
   "keywords": [
     "express",
