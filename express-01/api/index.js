@@ -2,7 +2,7 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 
-import models from "./models";
+import models, { sequelize } from "./models";
 import routes from "./routes";
 
 const app = express();
@@ -38,6 +38,10 @@ app.get("/", (req, res) => {
 });
 
 const port = process.env.PORT ?? 3000;
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+const eraseDatabaseOnSync = true;
+
+sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
+  app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+});
 
 module.exports = app;

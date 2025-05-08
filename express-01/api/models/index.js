@@ -1,28 +1,34 @@
-let users = {
-  1: {
-    id: "1",
-    username: "Robin Wieruch",
+import Sequelize from "sequelize";
+
+import getUserModel from "./user";
+import getMessageModel from "./message";
+
+// const sequelize = new Sequelize(process.env.DB_URL);
+
+const sequelize = new Sequelize(process.env.DB_URL, {
+  dialect: "postgres",
+  protocol: "postgres",
+  // logging: false, // Disable SQL query logging (set to true to debug)
+  dialectOptions: {
+    // Necessary for SSL on Render.com
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
   },
-  2: {
-    id: "2",
-    username: "Dave Davids",
-  },
+});
+
+const models = {
+  User: getUserModel(sequelize, Sequelize),
+  Message: getMessageModel(sequelize, Sequelize),
 };
 
-let messages = {
-  1: {
-    id: "1",
-    text: "Hello World",
-    userId: "1",
-  },
-  2: {
-    id: "2",
-    text: "By World",
-    userId: "2",
-  },
-};
+Object.keys(models).forEach((key) => {
+  if ("associate" in models[key]) {
+    models[key].associate(models);
+  }
+});
 
-export default {
-  users,
-  messages,
-};
+export { sequelize };
+
+export default models;
