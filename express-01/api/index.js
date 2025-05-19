@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
 });
 
 const port = process.env.PORT ?? 3000;
-const eraseDatabaseOnSync = process.env.ERASE_DB ?? false;
+const eraseDatabaseOnSync = process.env.ERASE_DB === "true" ?? false;
 
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
   if (eraseDatabaseOnSync) {
