@@ -8,9 +8,9 @@ import getMessageModel from "./message";
 const sequelize = new Sequelize(process.env.DB_URL, {
   dialect: "postgres",
   protocol: "postgres",
-  // logging: false, // Disable SQL query logging (set to true to debug)
+  // logging: false, // Disable SQL query logging
   dialectOptions: {
-    // Necessary for SSL on Render.com
+    // Necessary for SSL on Render.com and other providers
     ssl: {
       require: true,
       rejectUnauthorized: false,

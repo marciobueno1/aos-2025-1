@@ -20,10 +20,10 @@ app.use((req, res, next) => {
   next();
 });
 // middleware adicionando um objeto context ao objeto request (req)
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   req.context = {
     models,
-    me: models.users[1], // simulando que está recebendo um token válido do usuário id 1
+    me: await models.User.findByLogin("rwieruch"),
   };
   next();
 });
@@ -38,10 +38,49 @@ app.get("/", (req, res) => {
 });
 
 const port = process.env.PORT ?? 3000;
-const eraseDatabaseOnSync = true;
+const eraseDatabaseOnSync = process.env.ERASE_DB ?? false;
 
 sequelize.sync({ force: eraseDatabaseOnSync }).then(async () => {
+  if (eraseDatabaseOnSync) {
+    createUsersWithMessages();
+  }
+
   app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 });
+
+const createUsersWithMessages = async () => {
+  await models.User.create(
+    {
+      username: "rwieruch",
+      email: "rwieruch@example.com",
+      messages: [
+        {
+          text: "Published the Road to learn React",
+        },
+      ],
+    },
+    {
+      include: [models.Message],
+    }
+  );
+
+  await models.User.create(
+    {
+      username: "ddavids",
+      email: "ddavids@example.com",
+      messages: [
+        {
+          text: "Happy to release ...",
+        },
+        {
+          text: "Published a complete ...",
+        },
+      ],
+    },
+    {
+      include: [models.Message],
+    }
+  );
+};
 
 module.exports = app;
