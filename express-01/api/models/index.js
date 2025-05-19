@@ -16,6 +16,7 @@ const sequelize = new Sequelize(process.env.DB_URL, {
       rejectUnauthorized: false,
     },
   },
+  dialectModule: require("pg"),
 });
 
 const models = {
